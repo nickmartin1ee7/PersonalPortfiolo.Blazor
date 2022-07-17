@@ -1,0 +1,62 @@
+name: Backend CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2.1.0
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+
+  publish:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:    
+    - uses: actions/checkout@v3
+    
+    - name: Authenticate with Google Cloud
+      uses: google-github-actions/auth@v0.7.3
+      with:
+        credentials_json: ${{ secrets.GCR_DEVOPS_SERVICE_ACCOUNT_KEY }}
+        token_format: 'access_token'
+        export_environment_variables: true
+      
+    - name: Login to GCR
+      uses: 'docker/login-action@v2'
+      with:
+        registry: 'gcr.io'
+        username: '_json_key'
+        password: '${{ secrets.GCR_DEVOPS_SERVICE_ACCOUNT_KEY }}'
+ 
+    - name: Build & Tag the Docker image
+      env:
+        PROJECT_ID: ${{ secrets.PROJECT_ID }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |
+        docker build --file PersonalPortfiolo.Blazor/Dockerfile --tag gcr.io/$PROJECT_ID/personalportfioloblazor:latest --tag gcr.io/$PROJECT_ID/personalportfioloblazor:"$GITHUB_SHA" .
+        
+    # Push image to Google Container Registry
+    - name: Push to GCP Registry
+      env:
+        PROJECT_ID: ${{ secrets.PROJECT_ID }}
+        GITHUB_SHA: ${{ github.sha }}
+      run: |-
+        docker push gcr.io/$PROJECT_ID/personalportfioloblazor:"$GITHUB_SHA"
+        docker push gcr.io/$PROJECT_ID/personalportfioloblazor:latest
