@@ -28,7 +28,7 @@ jobs:
     needs: [ build ]
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: gcr.io/${{ secrets.GCP_PROJECT_ID }}/personalportfioloblazor
+      IMAGE_NAME: gcr.io/${{ secrets.PROJECT_ID }}/personalportfioloblazor
 
     steps:    
     - uses: actions/checkout@v3
