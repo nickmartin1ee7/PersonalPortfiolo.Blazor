@@ -1,19 +1,47 @@
-﻿@inherits LayoutComponentBase
+﻿@using PersonalPortfiolo.Blazor.Models
+@inherits LayoutComponentBase
+@inject IConfiguration _configuration
 
 <PageTitle>Nick Martin | Portfolio</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+@if (_settings is null)
+{
+    <p><em>loading...</em></p>
+}
+else
+{
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://github.com/nickmartin1ee7/PersonalPortfiolo.Blazor" target="_blank">Source Code</a>
+    <div class="page">
+        <div class="sidebar">
+            <NavMenu />
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+        <main>
+            <div class="top-row px-4">
+                @foreach (var mainLayoutLink in _settings.MainLayoutLinks!)
+                {
+                    <a class="navbar-brand" href="@mainLayoutLink.Uri" target="_blank">@mainLayoutLink.Title</a>
+                }
+            </div>
+
+            <article class="content px-4">
+                @Body
+            </article>
+        </main>
+    </div>
+}
+
+@code
+{
+    private Settings? _settings;
+
+    protected override Task OnInitializedAsync()
+    {
+        _settings = _configuration.GetSection(nameof(Settings)).Get<Settings>();
+
+        if (_settings is null)
+            throw new Exception($"{nameof(Settings)} failed to instantiate");
+
+        return Task.CompletedTask;
+    }
+}
