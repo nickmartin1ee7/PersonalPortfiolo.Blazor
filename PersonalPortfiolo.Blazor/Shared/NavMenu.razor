@@ -1,7 +1,11 @@
 ﻿@using PersonalPortfiolo.Blazor.Models
 @inject IConfiguration _configuration
 
-@if (_settings.NavBarEnabled)
+@if (_settings is null)
+{
+    <p><em>loading...</em></p>
+}
+else if (_settings!.NavBarEnabled)
 {
 
     <div class="top-row ps-3 navbar navbar-dark">
