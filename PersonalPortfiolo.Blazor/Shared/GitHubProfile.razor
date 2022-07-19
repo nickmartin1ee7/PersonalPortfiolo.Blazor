@@ -21,7 +21,7 @@ else
                 {
                     <tr style="outline: thin solid">
                         <td align="center">
-                            <a class="font-weight-bold link-dark" href="@repo.HtmlUrl">@repo.Name</a>
+                            <a class="font-weight-bold link-dark" href="@($"{ProfileUri}\\{repo.Name}")">@repo.Name</a>
                         </td>
                         <td>
                             @repo.Description
@@ -36,6 +36,9 @@ else
 @code
 {
     [Parameter]
+    public string? ProfileApiUri { get; set; }
+
+    [Parameter]
     public string? ProfileUri { get; set; }
 
     private bool _isLoading = true;
@@ -46,12 +49,15 @@ else
         if (string.IsNullOrEmpty(ProfileUri))
             throw new ArgumentNullException(nameof(ProfileUri));
 
+        if (string.IsNullOrEmpty(ProfileApiUri))
+            throw new ArgumentNullException(nameof(ProfileApiUri));
+
         _repos = await LoadGitHubProfileAsync();
 
         _isLoading = false;
     }
 
-    private Task<Repo[]?> LoadGitHubProfileAsync() => _httpClient.GetFromJsonAsync<Repo[]>(ProfileUri);
+    private Task<Repo[]?> LoadGitHubProfileAsync() => _httpClient.GetFromJsonAsync<Repo[]>(ProfileApiUri);
 
     record Owner
     {
