@@ -21,7 +21,7 @@ else
                 {
                     <tr style="outline: thin solid">
                         <td align="center">
-                            <a class="font-weight-bold link-dark" href="@repo.SvnUrl">@repo.Name</a>
+                            <a class="font-weight-bold link-dark" href="@repo.HtmlUrl">@repo.Name</a>
                         </td>
                         <td>
                             @repo.Description
@@ -51,7 +51,7 @@ else
         _isLoading = false;
     }
 
-    private Task<Repo[]> LoadGitHubProfileAsync() => _httpClient.GetFromJsonAsync<Repo[]>(ProfileUri);
+    private Task<Repo[]?> LoadGitHubProfileAsync() => _httpClient.GetFromJsonAsync<Repo[]>(ProfileUri);
 
     record Owner
     {
