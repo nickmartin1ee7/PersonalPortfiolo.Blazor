@@ -2,6 +2,7 @@
 
 public class Settings
 {
+    public bool NavBarEnabled { get; set; }
     public MainLayoutLink[]? MainLayoutLinks { get; set; }
 }
 
