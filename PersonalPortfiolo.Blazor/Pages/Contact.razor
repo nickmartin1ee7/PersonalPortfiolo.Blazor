@@ -9,11 +9,13 @@
 else
 {
     <h1>Contact Me</h1>
+    <hr />
+
     <p>
         I check my messages! Reach out to me on any of the following platforms.
     </p>
     <ul>
-        @foreach (var mainLayoutLink in _settings.MainLayoutLinks!)
+        @foreach (var mainLayoutLink in _settings!.MainLayoutLinks!)
         {
             <li><a href="@mainLayoutLink.Uri">@mainLayoutLink.Title</a></li>
         }

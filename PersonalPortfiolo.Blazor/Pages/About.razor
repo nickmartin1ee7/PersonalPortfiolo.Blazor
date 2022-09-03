@@ -8,7 +8,8 @@
 }
 else
 {
-    <h1>Welcome!</h1>
+    <h1>About Me</h1>
+    <hr />
 
     <strong>Hi, I'm Nick Martin</strong>
 
@@ -30,7 +31,7 @@ else
             throw new Exception($"{nameof(Settings)} failed to instantiate");
 
         _isLoading = false;
-        
+
         return Task.CompletedTask;
     }
 }
