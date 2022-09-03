@@ -43,7 +43,6 @@ a, .btn-link {
     filter: invert(100%)
 }
 
-
 .home-background {
     background-color: black; /* Used if the image is unavailable */
     background: url(/home-background.jpg) center center no-repeat fixed;
