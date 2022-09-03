@@ -86,7 +86,7 @@ a, .btn-link {
 
 /* Add a pulse animation to every tr on hover */
 tbody tr:hover {
-    animation: pulse 1s;
+    animation: pulse 500ms;
 }
 
 /* Create a pulse animation keyframe */
@@ -96,7 +96,7 @@ tbody tr:hover {
     }
 
     50% {
-        transform: scale(1.1);
+        transform: scale(1.02);
     }
 
     100% {
