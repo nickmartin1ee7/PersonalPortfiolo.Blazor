@@ -1,4 +1,4 @@
-﻿@page "/skills"
+﻿@page "/projects"
 @using PersonalPortfiolo.Blazor.Models
 @inject IConfiguration _configuration;
 
@@ -8,7 +8,7 @@
 }
 else
 {
-    <h1>Professional Skills</h1>
+    <h1>Programming Projects</h1>
     <hr />
 
     <GitHubProfile ProfileUri="@_settings!.GitHubProfileUri" ProfileApiUri="@_settings!.GitHubProfileApiUri" />
