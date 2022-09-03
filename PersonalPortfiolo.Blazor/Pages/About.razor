@@ -1,0 +1,36 @@
+﻿@page "/about"
+@using PersonalPortfiolo.Blazor.Models
+@inject IConfiguration _configuration;
+
+@if (_isLoading)
+{
+    <p><em>loading...</em></p>
+}
+else
+{
+    <h1>Welcome!</h1>
+
+    <strong>Hi, I'm Nick Martin</strong>
+
+    <p>
+        I am current a University of Louisville student, as well as an Application Development Co-op at UPS.
+    </p>
+}
+
+@code
+{
+    private bool _isLoading = true;
+    private Settings? _settings;
+
+    protected override Task OnInitializedAsync()
+    {
+        _settings = _configuration.GetSection(nameof(Settings)).Get<Settings>();
+
+        if (_settings is null)
+            throw new Exception($"{nameof(Settings)} failed to instantiate");
+
+        _isLoading = false;
+        
+        return Task.CompletedTask;
+    }
+}

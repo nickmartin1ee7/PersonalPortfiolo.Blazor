@@ -34,6 +34,28 @@ a, .btn-link {
     color: red;
 }
 
+.center-block {
+    text-align: center;
+    display: block;
+}
+
+.invert {
+    filter: invert(100%)
+}
+
+
+.home-background {
+    background-color: black; /* Used if the image is unavailable */
+    background: url(/home-background.jpg) center center no-repeat fixed;
+    background-size: cover;
+    height: 90vh
+}
+
+.home-text {
+    text-shadow: 2px 2px black;
+    color: white;
+}
+
 #blazor-error-ui {
     background: lightyellow;
     bottom: 0;
