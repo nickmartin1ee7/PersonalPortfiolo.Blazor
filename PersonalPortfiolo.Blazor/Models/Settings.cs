@@ -12,4 +12,5 @@ public class MainLayoutLink
 {
     public string? Title { get; set; }
     public string? Uri { get; set; }
+    public string? ImageUri { get; set; }
 }
