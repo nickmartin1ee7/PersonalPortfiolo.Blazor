@@ -9,15 +9,35 @@ else if (_settings!.NavBarEnabled)
 {
 
     <div class="top-row ps-3 navbar navbar-dark">
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-left:25%">
             <a class="navbar-brand" href="#">Portfolio</a>
         </div>
     </div>
 
     <nav class="flex-column">
-        <div class="nav-item px-3">
+        <div class="nav-item px-2">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="about" Match="NavLinkMatch.All">
+                <span class="oi oi-person" aria-hidden="true"></span> About Me
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="documents" Match="NavLinkMatch.All">
+                <span class="oi oi-book" aria-hidden="true"></span> Professional Documents
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="skills" Match="NavLinkMatch.All">
+                <span class="oi oi-code" aria-hidden="true"></span> Professional Skills
+            </NavLink>
+        </div>
+        <div class="nav-item px-2">
+            <NavLink class="nav-link" href="contact" Match="NavLinkMatch.All">
+                <span class="oi oi-envelope-closed" aria-hidden="true"></span> Contact Me
             </NavLink>
         </div>
     </nav>
@@ -31,7 +51,7 @@ else if (_settings!.NavBarEnabled)
         _settings = _configuration.GetSection(nameof(Settings)).Get<Settings>();
 
         if (_settings is null)
-            throw new Exception($"{nameof(Settings)} failed to instantiate");
+            throw new Exception($"{nameof(Settings)} failed to instantiate settings");
 
         return Task.CompletedTask;
     }
