@@ -8,12 +8,36 @@
 }
 else
 {
-    <h1>Professional Achievements</h1>
-
-    <strong>Page under construction</strong>
-    <hr />
-
-    <img src="/maintenance.jpg" style="width: 100%" />
+    <div class="about-section">
+        <h1>Professional & Educational Achievements</h1>
+        <hr />
+        <p>This page will feature some of my professional and educational projects and achievements.</p>
+    </div>
+    <div class="row">
+        @foreach (var item in _settings!.AchievementItems!)
+        {
+            <div class="column">
+                <div class="card">
+                    <div class="container">
+                        <h2>@item.Title</h2>
+                        <p class="title">@item.SubTitle</p>
+                        <p>@item.Description</p>
+                        <ul>
+                            @foreach (var bullet in @item.Bullets!)
+                            {
+                                <li>@bullet</li>
+                            }
+                        </ul>
+                        <hr />
+                        <p>
+                            Learn more
+                            <a href="@item.Uri">@item.UriDescription</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 }
 
 @code
@@ -29,7 +53,7 @@ else
             throw new Exception($"{nameof(Settings)} failed to instantiate");
 
         _isLoading = false;
-        
+
         return Task.CompletedTask;
     }
 }
