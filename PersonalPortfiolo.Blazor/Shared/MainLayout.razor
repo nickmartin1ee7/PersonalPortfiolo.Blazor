@@ -17,7 +17,7 @@ else
 
         <main>
             <div class="top-row px-4">
-                @foreach (var mainLayoutLink in _settings.MainLayoutLinks!)
+                @foreach (var mainLayoutLink in _settings.MainLayoutLinks)
                 {
                     <a class="navbar-brand" href="@mainLayoutLink.Uri" target="_blank">@mainLayoutLink.Title</a>
                 }

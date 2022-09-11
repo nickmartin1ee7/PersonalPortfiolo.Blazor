@@ -14,7 +14,7 @@ else
         <p>This page will feature some of my professional and educational projects and achievements.</p>
     </div>
     <div class="row">
-        @foreach (var item in _settings!.AchievementItems!)
+        @foreach (var item in _settings!.AchievementItems)
         {
             <div class="column">
                 <div class="card">
@@ -23,7 +23,7 @@ else
                         <p class="title">@item.SubTitle</p>
                         <p>@item.Description</p>
                         <ul>
-                            @foreach (var bullet in @item.Bullets!)
+                            @foreach (var bullet in @item.Bullets)
                             {
                                 <li>@bullet</li>
                             }
