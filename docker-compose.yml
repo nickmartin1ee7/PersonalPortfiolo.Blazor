@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  web:
+    image: ${DOCKER_REGISTRY-}personalportfioloblazor
+    build:
+      context: .
+      dockerfile: PersonalPortfiolo.Blazor/Dockerfile
+    restart: unless-stopped
+
+  proxy:
+    image: jc21/nginx-proxy-manager:latest
+    ports:
+      - '80'
+      - '81'
+      - '443'
+    restart: unless-stopped
+    depends_on:
+      - web
