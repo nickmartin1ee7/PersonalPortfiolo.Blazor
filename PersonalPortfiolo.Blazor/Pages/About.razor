@@ -91,5 +91,5 @@ else
     }
 
     protected async void OpenResume() =>
-        await _jsRuntime.InvokeVoidAsync("open", _settings!.ResumeLink);
+        await _jsRuntime.InvokeVoidAsync("open", _settings!.ResumeUri);
 }
