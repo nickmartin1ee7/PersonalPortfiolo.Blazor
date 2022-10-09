@@ -1,6 +1,7 @@
 ﻿@page "/about"
 @using PersonalPortfiolo.Blazor.Models
 @inject IConfiguration _configuration;
+@inject IJSRuntime _jsRuntime;
 
 @if (_isLoading)
 {
@@ -18,7 +19,8 @@ else
                     <h1>About Me</h1>
                     <hr />
                     <p>Hi, I'm Nick Martin</p>
-                    <p>This page is just to tell you a little bit about myself.</p>
+                    <p>I'm an <bold>aspiring applications developer</bold> who has a passion for learning new technologies and exploring new ways to solve real-world problems.</p>
+                    <button class="btn-primary" onclick="@(() => OpenResume())">View Resume</button>
                 </div>
             </div>
         </div>
@@ -87,4 +89,7 @@ else
 
         return Task.CompletedTask;
     }
+
+    protected async void OpenResume() =>
+        await _jsRuntime.InvokeVoidAsync("open", _settings!.ResumeLink);
 }

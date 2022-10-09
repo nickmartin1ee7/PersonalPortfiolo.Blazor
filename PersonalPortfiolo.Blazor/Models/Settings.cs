@@ -5,6 +5,7 @@ public class Settings
     public bool NavBarEnabled { get; set; }
     public string? GitHubProfileUri { get; set; }
     public string? GitHubProfileApiUri { get; set; }
+    public string? ResumeLink { get; set; }
     public MainLayoutLink[] MainLayoutLinks { get; set; } = Array.Empty<MainLayoutLink>();
     public AchievementItem[] AchievementItems { get; set; } = Array.Empty<AchievementItem>();
 }
