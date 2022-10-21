@@ -22,12 +22,21 @@ else
                         <h2>@item.Title</h2>
                         <p class="title">@item.SubTitle</p>
                         <p>@item.Description</p>
-                        <ul>
-                            @foreach (var bullet in @item.Bullets)
-                            {
-                                <li>@bullet</li>
-                            }
-                        </ul>
+                        @if (item.Bullets.Any())
+                        {
+                            <ul>
+                                @foreach (var bullet in @item.Bullets)
+                                {
+                                    <li>@bullet</li>
+                                }
+                            </ul>
+                        }
+                        @if (item.ImageUri is not null)
+                        {
+                            <div style="display: flex; justify-content: center;">
+                                <img style="max-width: 350px; max-height: 350px" src="@item.ImageUri" />
+                            </div>
+                        }
                         <hr />
                         <p>
                             Learn more

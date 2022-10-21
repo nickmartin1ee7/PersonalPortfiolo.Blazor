@@ -22,6 +22,7 @@ public class AchievementItem
     public string? Title { get; set; }
     public string? SubTitle { get; set; }
     public string? Description { get; set; }
+    public string? ImageUri { get; set; }
     public string? UriDescription { get; set; }
     public string? Uri { get; set; }
     public string[] Bullets { get; set; } = Array.Empty<string>();
