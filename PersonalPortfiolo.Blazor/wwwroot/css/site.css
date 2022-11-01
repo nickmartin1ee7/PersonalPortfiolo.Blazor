@@ -15,6 +15,7 @@ h1:focus {
 
 a, .btn-link {
     color: #0071c1;
+    text-shadow: 0 0 black;
 }
 
 .btn-primary {
@@ -42,6 +43,19 @@ a, .btn-link {
 .center-block {
     text-align: center;
     display: block;
+}
+
+.center {
+    margin: auto !important;
+    width: 50% !important;
+    padding: 10px;
+}
+
+.center p {
+    display: inline-block;
+    line-height: normal;
+    vertical-align: middle;
+    text-align: center;
 }
 
 .invert {
