@@ -127,6 +127,12 @@ tbody tr:hover {
     box-sizing: inherit;
 }
 
+@media(max-width: 1080px) {
+    .column {
+        width: auto !important;
+    }
+}
+
 .column {
     float: left;
     width: 33.3%;
