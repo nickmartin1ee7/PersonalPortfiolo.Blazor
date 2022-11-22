@@ -6,6 +6,7 @@ public class Settings
     public string? GitHubProfileUri { get; set; }
     public string? GitHubProfileApiUri { get; set; }
     public string? ResumeUri { get; set; }
+    public string? CoverLetterUri { get; set; }
     public MainLayoutLink[] MainLayoutLinks { get; set; } = Array.Empty<MainLayoutLink>();
     public AchievementItem[] AchievementItems { get; set; } = Array.Empty<AchievementItem>();
 }
