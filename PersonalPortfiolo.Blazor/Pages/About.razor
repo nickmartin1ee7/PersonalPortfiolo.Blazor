@@ -21,15 +21,15 @@ else
                     <p>Hi, I'm Nick Martin</p>
                     <p>
                         I am an <bold>aspiring applications developer</bold> who has a passion for learning new technologies and exploring new ways to solve real-world problems.
-                        I think analytically and work strategically with others on teams.
-                        I am a leader. I feel comfortable in a leadership position, and work diligently to grow my team's skillset while achieving our goals.
+                        I think analytically, have a curious mind that is focused on growth, and work strategically with others on teams.
+                        I am a leader. I feel comfortable in a leadership position and work diligently to grow my team's skillset while achieving our goals.
                     </p>
                     <p>I have worked with IT in various aspects of my life including:</p>
                     <ul style="text-align: left">
                         <li>Professionally, during my Co-op position</li>
                         <li>Professionally, as a Computer Information Systems Tutor for my university</li>
                         <li>Educationally, through my coursework and projects with non-profits</li>
-                        <li>As a hobbiest, who has created several <a style="color: cornflowerblue" href="projects">side projects</a> to stay current and learn new technologies</li>
+                        <li>As a hobbyist, who has created several <a style="color: cornflowerblue" href="projects">side projects</a> to stay current and learn new technologies</li>
                     </ul>
                     <button class="btn-primary" onclick="@(() => OpenResume())">View Resume</button>
                     <button class="btn-primary" onclick="@(() => OpenCoverLetter())">View Cover Letter</button>
@@ -61,9 +61,11 @@ else
             <div class="card">
                 <img src="/about-coop.jpg" style="width:100%">
                 <div class="container">
-                    <h2>Co-op</h2>
+                    <h2>Application Developer Co-op</h2>
                     <p class="title">United Parcel Service</p>
-                    <p>Worked on an Agile development team that maintained a critical application stack that facilitated regulatory compliance and job functions for +30,000 CDL UPS drivers.</p>
+                    <p>I work on an Agile development team at a Fortune 50 industry leader that maintains a critical application stack that facilitates regulatory compliance and job functions for +30,000 CDL UPS drivers.</p>
+                    <p>In this position, I have led several new incentives and worked diligently to navigate a complex infrastructure in order to provide value to our product owners and user stakeholders.</p>
+                    <p>I have also mentored other co-ops and helped guide them towards success at the company and on my team, while imparting valuable career skills during their time on our team.</p>
                 </div>
             </div>
         </div>
@@ -75,7 +77,7 @@ else
                     <h2>Hobbiest Developer</h2>
                     <p class="title">Personal</p>
                     <p>
-                        I love developing side-projects! I frequently build new applications to test out ideas or technology.
+                        I love developing side projects! I frequently build new applications to test out ideas or technology.
                     </p>
                     <hr />
                     <p>
@@ -107,7 +109,7 @@ else
 
     protected async void OpenResume() =>
         await _jsRuntime.InvokeVoidAsync("open", _settings!.ResumeUri);
-    
+
     protected async void OpenCoverLetter() =>
         await _jsRuntime.InvokeVoidAsync("open", _settings!.CoverLetterUri);
 }
