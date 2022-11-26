@@ -23,8 +23,13 @@ public class AchievementItem
     public string? Title { get; set; }
     public string? SubTitle { get; set; }
     public string? Description { get; set; }
+    public LearnMoreItem[] LearnMoreItems { get; set; } = Array.Empty<LearnMoreItem>();
     public string? ImageUri { get; set; }
+    public string[] Bullets { get; set; } = Array.Empty<string>();
+}
+
+public class LearnMoreItem
+{
     public string? UriDescription { get; set; }
     public string? Uri { get; set; }
-    public string[] Bullets { get; set; } = Array.Empty<string>();
 }

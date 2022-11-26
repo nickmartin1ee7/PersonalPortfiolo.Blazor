@@ -36,14 +36,20 @@ else
                         @if (item.ImageUri is not null)
                         {
                             <div style="display: flex; justify-content: center;">
-                                <img style="max-width: 100%; height: auto; max-width=10vw" src="@item.ImageUri" />
+                                <img style="max-width: 100%; height: auto;" src="@item.ImageUri" />
                             </div>
                         }
                         <hr />
-                        <p>
-                            Learn more
-                            <a href="@item.Uri">@item.UriDescription</a>
-                        </p>
+                        @if (item.LearnMoreItems is not null && item.LearnMoreItems.Any())
+                        {
+                            @foreach (var learnMoreItem in item.LearnMoreItems)
+                            {
+                                <p>
+                                    Learn more:
+                                    <a href="@learnMoreItem.Uri">@learnMoreItem.UriDescription</a>
+                                </p>
+                            }
+                        }
                     </div>
                 </div>
             </div>
