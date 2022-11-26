@@ -64,7 +64,7 @@ a, .btn-link {
 
 .home-background {
     background-color: black; /* Used if the image is unavailable */
-    background: url(/home-background.jpg) center center no-repeat fixed;
+    background: url(/home-background.webp) center center no-repeat fixed;
     background-size: cover;
     height: 90vh
 }

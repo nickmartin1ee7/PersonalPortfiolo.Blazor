@@ -12,7 +12,7 @@ else
     <div class="about-section">
         <div class="row">
             <div class="column" style="margin-left: 10vw">
-                <img class="card" src="/about-me.jfif" style="width:100%; max-width: 15vw">
+                <img class="card" src="/about-me.webp" style="width:100%; max-width: 15vw">
             </div>
             <div class="column">
                 <div class="container">
@@ -41,7 +41,7 @@ else
     <div class="row">
         <div class="column">
             <div class="card">
-                <img src="/about-student.jpg" style="width:100%">
+                <img src="/about-student.webp" style="width:100%">
                 <div class="container">
                     <h2>Student</h2>
                     <p class="title">University of Louisville</p>
@@ -59,7 +59,7 @@ else
 
         <div class="column">
             <div class="card">
-                <img src="/about-coop.jpg" style="width:100%">
+                <img src="/about-coop.webp" style="width:100%">
                 <div class="container">
                     <h2>Application Developer Co-op</h2>
                     <p class="title">United Parcel Service</p>
@@ -72,7 +72,7 @@ else
 
         <div class="column">
             <div class="card">
-                <img src="/about-developer.jpg" style="width:100%">
+                <img src="/about-developer.webp" style="width:100%">
                 <div class="container">
                     <h2>Hobbiest Developer</h2>
                     <p class="title">Personal</p>
@@ -107,9 +107,9 @@ else
         return Task.CompletedTask;
     }
 
-    protected async void OpenResume() =>
+    private async void OpenResume() =>
         await _jsRuntime.InvokeVoidAsync("open", _settings!.ResumeUri);
 
-    protected async void OpenCoverLetter() =>
+    private async void OpenCoverLetter() =>
         await _jsRuntime.InvokeVoidAsync("open", _settings!.CoverLetterUri);
 }
