@@ -3,7 +3,9 @@
 
 @if (_isLoading)
 {
-    <p><em>loading...</em></p>
+    <p>
+        <em>loading...</em>
+    </p>
 }
 else
 {
@@ -11,23 +13,23 @@ else
         <h2>@_repos!.Length GitHub Repos</h2>
         <table>
             <thead>
-                <tr align="center">
-                    <th>Project Name</th>
-                    <th>Project Description</th>
-                </tr>
+            <tr align="center">
+                <th>Project Name</th>
+                <th>Project Description</th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var repo in _repos)
-                {
-                    <tr style="outline: thin solid">
-                        <td align="center">
-                            <a class="font-weight-bold link-dark" href="@($"{ProfileUri}\\{repo.Name}")">@repo.Name</a>
-                        </td>
-                        <td>
-                            @repo.Description
-                        </td>
-                    </tr>
-                }
+            @foreach (var repo in _repos)
+            {
+                <tr style="outline: thin solid">
+                    <td align="center">
+                        <a class="font-weight-bold link-dark" href="@($"{ProfileUri}\\{repo.Name}")">@repo.Name</a>
+                    </td>
+                    <td>
+                        @repo.Description
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

@@ -3,11 +3,12 @@
 
 @if (_settings is null)
 {
-    <p><em>loading...</em></p>
+    <p>
+        <em>loading...</em>
+    </p>
 }
 else if (_settings!.NavBarEnabled)
 {
-
     <div class="top-row ps-3 navbar navbar-dark">
         <div class="container-fluid" style="margin-left:25%">
             <a class="navbar-brand" href="/">Portfolio</a>
@@ -65,4 +66,5 @@ else if (_settings!.NavBarEnabled)
 
         return Task.CompletedTask;
     }
+
 }

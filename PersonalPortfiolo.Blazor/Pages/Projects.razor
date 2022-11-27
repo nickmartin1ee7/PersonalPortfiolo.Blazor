@@ -4,14 +4,16 @@
 
 @if (_isLoading)
 {
-    <p><em>loading...</em></p>
+    <p>
+        <em>loading...</em>
+    </p>
 }
 else
 {
     <h1>Programming Projects</h1>
-    <hr />
+    <hr/>
 
-    <GitHubProfile ProfileUri="@_settings!.GitHubProfileUri" ProfileApiUri="@_settings!.GitHubProfileApiUri" />
+    <GitHubProfile ProfileUri="@_settings!.GitHubProfileUri" ProfileApiUri="@_settings!.GitHubProfileApiUri"/>
 }
 
 @code
