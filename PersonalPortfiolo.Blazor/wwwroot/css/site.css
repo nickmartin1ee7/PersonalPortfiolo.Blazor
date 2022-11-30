@@ -51,6 +51,12 @@ a, .btn-link {
     padding: 10px;
 }
 
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .center p {
     display: inline-block;
     line-height: normal;
