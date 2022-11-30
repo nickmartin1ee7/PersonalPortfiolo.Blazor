@@ -131,6 +131,12 @@ tbody tr:hover {
     .column {
         width: auto !important;
     }
+    .card {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        max-width: none !important;;
+    }
 }
 
 .column {
