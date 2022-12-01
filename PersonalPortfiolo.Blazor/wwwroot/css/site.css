@@ -215,3 +215,7 @@ tbody tr:hover {
         transform: rotate(360deg)
     }
 }
+
+#components-reconnect-modal{
+    display: none !important;
+}
