@@ -1,3 +1,5 @@
+using System.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,7 +8,11 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton(_ =>
 {
     var client = new HttpClient();
-    client.DefaultRequestHeaders.Add("User-Agent", "CustomClient/1");
+
+    client.DefaultRequestHeaders.Host = "api.github.com";
+    client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("Custom", "1.0.0"));
+    client.DefaultRequestHeaders.Accept.Add(MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
     return client;
 });
 

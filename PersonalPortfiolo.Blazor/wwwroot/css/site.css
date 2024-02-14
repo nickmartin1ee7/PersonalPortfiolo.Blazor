@@ -114,6 +114,10 @@ tbody tr:hover {
     animation: pulse 500ms;
 }
 
+thead, tbody, tfoot, tr, td, th {
+    border-width: 1px
+}
+
 /* Create a pulse animation keyframe */
 @keyframes pulse {
     0% {

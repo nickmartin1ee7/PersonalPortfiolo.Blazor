@@ -33,7 +33,6 @@ else
                         <li>As a hobbyist, who has created several <a style="color: cornflowerblue" href="projects">side projects</a> to stay current and learn new technologies</li>
                     </ul>
                     <button class="btn-primary" onclick="@(() => OpenResume())">View Resume</button>
-                    <button class="btn-primary" onclick="@(() => OpenCoverLetter())">View Cover Letter</button>
                 </div>
             </div>
             <div class="column flex-center">
@@ -113,7 +112,4 @@ else
 
     private async void OpenResume() =>
         await _jsRuntime.InvokeVoidAsync("open", _settings!.ResumeUri);
-
-    private async void OpenCoverLetter() =>
-        await _jsRuntime.InvokeVoidAsync("open", _settings!.CoverLetterUri);
 }

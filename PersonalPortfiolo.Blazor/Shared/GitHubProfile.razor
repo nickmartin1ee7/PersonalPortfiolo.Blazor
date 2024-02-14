@@ -1,4 +1,5 @@
 ﻿@using PersonalPortfiolo.Blazor.Models
+@using PersonalPortfiolo.Blazor.Models.GitHub
 @inject HttpClient _httpClient
 
 @if (_isLoading)
@@ -13,19 +14,23 @@ else
             <thead>
                 <tr align="center">
                     <th>Project Name</th>
+                    <th>Stars</th>
+                    <th>Language</th>
+                    <th>Last Updated</th>
                     <th>Project Description</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var repo in _repos)
+                @foreach (var repo in _repos
+               .OrderByDescending(repo => repo.StargazersCount)
+               .ThenByDescending(repo => repo.UpdatedAt))
                 {
-                    <tr style="outline: thin solid">
-                        <td align="center">
-                            <a class="font-weight-bold link-dark" href="@($"{ProfileUri}\\{repo.Name}")">@repo.Name</a>
-                        </td>
-                        <td>
-                            @repo.Description
-                        </td>
+                    <tr style="outline: thin solid" align="center">
+                        <td><a class="font-weight-bold link-dark" href="@repo.HtmlUrl">@repo.Name</a></td>
+                        <td>@repo.StargazersCount</td>
+                        <td>@repo.Language</td>
+                        <td>@repo.UpdatedAt</td>
+                        <td>@repo.Description</td>
                     </tr>
                 }
             </tbody>
@@ -55,11 +60,5 @@ else
         _repos = await _httpClient.GetFromJsonAsync<Repo[]>(ProfileApiUri);
 
         _isLoading = false;
-    }
-
-    record Repo
-    {
-        public string? Name { get; set; }
-        public string? Description { get; set; }
     }
 }
