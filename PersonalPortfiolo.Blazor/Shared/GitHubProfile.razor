@@ -22,17 +22,18 @@ else
             </thead>
             <tbody>
                 @foreach (var repo in _repos
-               .OrderByDescending(repo => repo.StargazersCount)
-               .ThenByDescending(repo => repo.UpdatedAt))
-                {
-                    <tr style="outline: thin solid" align="center">
-                        <td><a class="font-weight-bold link-dark" href="@repo.HtmlUrl">@repo.Name</a></td>
-                        <td>@repo.StargazersCount</td>
-                        <td>@repo.Language</td>
-                        <td>@repo.UpdatedAt</td>
-                        <td>@repo.Description</td>
-                    </tr>
-                }
+                    .OrderByDescending(repo => repo.Description.Contains("#featured", StringComparison.InvariantCultureIgnoreCase))
+                    .ThenByDescending(repo => repo.StargazersCount)
+                    .ThenByDescending(repo => repo.UpdatedAt))
+                    {
+                        <tr style="outline: thin solid" align="center">
+                            <td><a class="font-weight-bold link-dark" href="@repo.HtmlUrl">@repo.Name</a></td>
+                            <td>@repo.StargazersCount</td>
+                            <td>@repo.Language</td>
+                            <td>@repo.UpdatedAt</td>
+                            <td>@repo.Description</td>
+                        </tr>
+                    }
             </tbody>
         </table>
     </div>
