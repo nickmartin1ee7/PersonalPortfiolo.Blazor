@@ -169,7 +169,7 @@ thead, tbody, tfoot, tr, td, th {
 }
 
 .container {
-    padding: 0 16px;
+    padding: 8px 16px;
 }
 
 .container::after, .row::after {
