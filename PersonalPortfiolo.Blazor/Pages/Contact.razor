@@ -10,7 +10,7 @@ else
 {
     <div class="about-section">
         <h1>Contact Me</h1>
-        <hr/>
+        <hr />
         <h3>Reach out to me on any of the below platforms.</h3>
     </div>
     <div class="row">
@@ -18,15 +18,15 @@ else
         {
             <div class="column" style="min-width: 10vw">
                 <div class="card">
-                    <div class="container">
-                        @if (mainLayoutLink.ImageUri is not null)
-                        {
-                            <img src="@mainLayoutLink.ImageUri" style="width: 100%; height: auto; max-width: 10vw"/>
-                        }
-                        <a href="@mainLayoutLink.Uri">
-                            <h2>@mainLayoutLink.Title</h2>
-                        </a>
-                    </div>
+                    <a href="@mainLayoutLink.Uri">
+                        <div class="container center" style="text-align: center">
+                                <h2>@mainLayoutLink.Title</h2>
+                            @if (mainLayoutLink.ImageUri is not null)
+                            {
+                                <img src="@mainLayoutLink.ImageUri" style="width: 100%; height: auto; max-width: 10vw" />
+                            }
+                        </div>
+                    </a>
                 </div>
             </div>
         }
