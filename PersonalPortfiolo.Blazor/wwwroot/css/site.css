@@ -132,6 +132,7 @@ p {
 
 .btn-primary:hover {
   background: var(--accent-violet);
+  color: white;
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
