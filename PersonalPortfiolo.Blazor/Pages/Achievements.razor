@@ -1,78 +1,110 @@
-﻿@page "/achievements"
-@using PersonalPortfiolo.Blazor.Models
-@inject IConfiguration _configuration;
+@page "/achievements"
 
-@if (_isLoading)
-{
-    <div class="spinner"></div>
-}
-else
-{
-    <div class="about-section">
-        <h1>Educational Achievements</h1>
-        <hr/>
-        <p>This page will feature my educational projects and achievements.</p>
-        <p>
-            I have a demonstrated background in various IT skills and applications to solve business problems.
-            The achievements below highlight competency with: C#/.NET development, SQL and Database design, Company Case Study Analysis, Information Security, and Systems fundamentals.
-        </p>
-    </div>
-    <div class="row">
-        @foreach (var item in _settings!.AchievementItems)
-        {
-            <div class="column">
-                <div class="card">
-                    <div class="container">
-                        <h2>@item.Title</h2>
-                        <p class="title">@item.SubTitle</p>
+<section class="section">
+    <div class="container">
+        <div class="section-header animate-fade-in-up">
+            <h1 class="section-title">Achievements</h1>
+            <p class="section-subtitle">
+                Academic excellence and hands-on project experience demonstrating competency 
+                in C#/.NET development, database design, information security, and systems fundamentals.
+            </p>
+        </div>
+
+        <div class="achievements-grid">
+            @foreach (var item in ViewModel.AchievementItems)
+            {
+                <div class="achievement-card animate-fade-in-up">
+                    @if (!string.IsNullOrEmpty(item.ImageUri))
+                    {
+                        <div class="achievement-image">
+                            <img src="@item.ImageUri" alt="@item.Title" />
+                        </div>
+                    }
+                    
+                    <div class="achievement-content">
+                        <p class="card-subtitle">@item.SubTitle</p>
+                        <h3 class="card-title">@item.Title</h3>
                         <p>@item.Description</p>
-                        @if (item.Bullets.Any())
+                        
+                        @if (item.Bullets?.Any() == true)
                         {
-                            <ul>
-                                @foreach (var bullet in @item.Bullets)
+                            <ul class="list-unstyled">
+                                @foreach (var bullet in item.Bullets)
                                 {
                                     <li>@bullet</li>
                                 }
                             </ul>
                         }
-                        @if (item.ImageUri is not null)
+                        
+                        @if (item.LearnMoreItems?.Any() == true)
                         {
-                            <div style="display: flex; justify-content: center;">
-                                <img style="max-width: 100%; height: auto;" src="@item.ImageUri"/>
+                            <div class="achievement-links">
+                                @foreach (var link in item.LearnMoreItems)
+                                {
+                                    <a href="@link.Uri" target="_blank" class="icon-link">
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                                        </svg>
+                                        @link.UriDescription
+                                    </a>
+                                }
                             </div>
-                        }
-                        <hr/>
-                        @if (item.LearnMoreItems is not null && item.LearnMoreItems.Any())
-                        {
-                            @foreach (var learnMoreItem in item.LearnMoreItems)
-                            {
-                                <p>
-                                    Learn more:
-                                    <a href="@learnMoreItem.Uri">@learnMoreItem.UriDescription</a>
-                                </p>
-                            }
                         }
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-}
+</section>
 
-@code
-{
-    private bool _isLoading = true;
-    private Settings? _settings;
-
-    protected override Task OnInitializedAsync()
-    {
-        _settings = _configuration.GetSection(nameof(Settings)).Get<Settings>();
-
-        if (_settings is null)
-            throw new Exception($"{nameof(Settings)} failed to instantiate");
-
-        _isLoading = false;
-
-        return Task.CompletedTask;
+<style>
+    .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 1.5rem;
     }
+
+    .achievement-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: all var(--transition-normal);
+    }
+
+    .achievement-card:hover {
+        border-color: var(--border-active);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .achievement-image {
+        width: 100%;
+        height: 160px;
+        overflow: hidden;
+        background: var(--bg-elevated);
+    }
+
+    .achievement-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .achievement-content {
+        padding: 1.5rem;
+    }
+
+    .achievement-links {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border-subtle);
+    }
+</style>
+
+@code {
+    [Inject] public AchievementsViewModel ViewModel { get; set; } = null!;
 }

@@ -1,41 +1,64 @@
-﻿@using PersonalPortfiolo.Blazor.Models
 @using PersonalPortfiolo.Blazor.Models.GitHub
 @inject HttpClient _httpClient
 
 @if (_isLoading)
 {
-    <div class="spinner"></div>
+    <div class="flex-center" style="min-height: 300px;">
+        <div class="spinner"></div>
+    </div>
+}
+else if (_repos?.Any() == true)
+{
+    <div class="repos-header">
+        <h3>@_repos.Length GitHub Repositories</h3>
+        <a href="@ProfileUri" target="_blank" class="btn btn-outline btn-sm">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            View Profile
+        </a>
+    </div>
+
+    <div class="repos-grid">
+        @foreach (var repo in _sortedRepos)
+        {
+            <a href="@repo.HtmlUrl" target="_blank" class="repo-card">
+                <div class="repo-header">
+                    <h4 class="repo-name">@repo.Name</h4>
+                    @if (!string.IsNullOrEmpty(repo.Language))
+                    {
+                        <span class="repo-language">
+                            <span class="language-dot" style="background: @GetLanguageColor(repo.Language)"></span>
+                            @repo.Language
+                        </span>
+                    }
+                </div>
+                
+                <p class="repo-description">@(repo.Description ?? "No description")</p>
+                
+                <div class="repo-stats">
+                    <span class="repo-stat">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        @repo.StargazersCount
+                    </span>
+                    <span class="repo-stat">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/>
+                        </svg>
+                        @repo.ForksCount
+                    </span>
+                    <span class="repo-updated">@GetTimeAgo(repo.UpdatedAt)</span>
+                </div>
+            </a>
+        }
+    </div>
 }
 else
 {
-    <div class="alert alert-secondary mt-4">
-        <h2>@_repos!.Length GitHub Repos</h2>
-        <table>
-            <thead>
-                <tr align="center">
-                    <th>Project Name</th>
-                    <th>Stars</th>
-                    <th>Language</th>
-                    <th>Last Updated</th>
-                    <th>Project Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var repo in _repos
-                    .OrderByDescending(repo => repo.Description.Contains("#featured", StringComparison.InvariantCultureIgnoreCase))
-                    .ThenByDescending(repo => repo.StargazersCount)
-                    .ThenByDescending(repo => repo.UpdatedAt))
-                    {
-                        <tr style="outline: thin solid" align="center">
-                            <td><a class="font-weight-bold link-dark" href="@repo.HtmlUrl">@repo.Name</a></td>
-                            <td>@repo.StargazersCount</td>
-                            <td>@repo.Language</td>
-                            <td>@repo.UpdatedAt</td>
-                            <td>@repo.Description</td>
-                        </tr>
-                    }
-            </tbody>
-        </table>
+    <div class="empty-state">
+        <p>No repositories found.</p>
     </div>
 }
 
@@ -49,6 +72,7 @@ else
 
     private bool _isLoading = true;
     private Repo[]? _repos;
+    private IEnumerable<Repo> _sortedRepos = Enumerable.Empty<Repo>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -58,8 +82,146 @@ else
         if (string.IsNullOrEmpty(ProfileApiUri))
             throw new ArgumentNullException(nameof(ProfileApiUri));
 
-        _repos = await _httpClient.GetFromJsonAsync<Repo[]>(ProfileApiUri);
+        try
+        {
+            _repos = await _httpClient.GetFromJsonAsync<Repo[]>(ProfileApiUri);
+            _sortedRepos = _repos
+                .OrderByDescending(r => r.Description?.Contains("#featured", StringComparison.OrdinalIgnoreCase) == true)
+                .ThenByDescending(r => r.StargazersCount)
+                .ThenByDescending(r => r.UpdatedAt);
+        }
+        catch
+        {
+            _repos = Array.Empty<Repo>();
+        }
 
         _isLoading = false;
     }
+
+    private static string GetLanguageColor(string language) => language.ToLower() switch
+    {
+        "c#" or "csharp" => "#178600",
+        "javascript" => "#f1e05a",
+        "typescript" => "#2b7489",
+        "python" => "#3572A5",
+        "java" => "#b07219",
+        "go" => "#00ADD8",
+        "rust" => "#dea584",
+        "html" => "#e34c26",
+        "css" => "#563d7c",
+        "shell" => "#89e051",
+        "dockerfile" => "#384d54",
+        _ => "#8b949e"
+    };
+
+    private static string GetTimeAgo(DateTime? dateTime)
+    {
+        if (!dateTime.HasValue) return "unknown";
+        var span = DateTime.UtcNow - dateTime.Value;
+        if (span.TotalDays > 365) return $"{(int)(span.TotalDays / 365)}y";
+        if (span.TotalDays > 30) return $"{(int)(span.TotalDays / 30)}mo";
+        if (span.TotalDays > 0) return $"{(int)span.TotalDays}d";
+        if (span.TotalHours > 0) return $"{(int)span.TotalHours}h";
+        return "now";
+    }
 }
+
+<style>
+    .repos-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .repos-header h3 {
+        color: var(--text-primary);
+    }
+
+    .repos-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1rem;
+    }
+
+    .repo-card {
+        display: flex;
+        flex-direction: column;
+        padding: 1.25rem;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-md);
+        text-decoration: none;
+        transition: all var(--transition-normal);
+    }
+
+    .repo-card:hover {
+        border-color: var(--border-active);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .repo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .repo-name {
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--accent-cyan);
+        word-break: break-all;
+    }
+
+    .repo-language {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        white-space: nowrap;
+    }
+
+    .language-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+    }
+
+    .repo-description {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        flex-grow: 1;
+        line-height: 1.5;
+    }
+
+    .repo-stats {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.75rem;
+        color: var(--text-muted);
+    }
+
+    .repo-stat {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+
+    .repo-updated {
+        margin-left: auto;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 3rem;
+        color: var(--text-muted);
+    }
+</style>

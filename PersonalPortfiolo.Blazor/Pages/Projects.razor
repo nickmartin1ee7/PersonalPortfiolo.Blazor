@@ -1,36 +1,22 @@
-﻿@page "/projects"
-@using PersonalPortfiolo.Blazor.Models
-@inject IConfiguration _configuration;
+@page "/projects"
 
-@if (_isLoading)
-{
-    <div class="spinner"></div>
-}
-else
-{
-    <div class="about-section">
-        <h1>Programming Projects</h1>
-        <hr/>
-        <p>Explore my GitHub Repos! I love to explore new technologies and build projects that test my abilities.</p>
+<section class="section">
+    <div class="container">
+        <div class="section-header animate-fade-in-up">
+            <h1 class="section-title">Projects</h1>
+            <p class="section-subtitle">
+                Explore my GitHub repositories. I love building applications that test my abilities 
+                and explore new technologies.
+            </p>
+        </div>
+
+        <GitHubProfile 
+            ProfileUri="@ViewModel.GitHubProfileUri" 
+            ProfileApiUri="@ViewModel.GitHubProfileApiUri" 
+        />
     </div>
+</section>
 
-    <GitHubProfile ProfileUri="@_settings!.GitHubProfileUri" ProfileApiUri="@_settings!.GitHubProfileApiUri"/>
-}
-
-@code
-{
-    private bool _isLoading = true;
-    private Settings? _settings;
-
-    protected override Task OnInitializedAsync()
-    {
-        _settings = _configuration.GetSection(nameof(Settings)).Get<Settings>();
-
-        if (_settings is null)
-            throw new Exception($"{nameof(Settings)} failed to instantiate");
-
-        _isLoading = false;
-
-        return Task.CompletedTask;
-    }
+@code {
+    [Inject] public ProjectsViewModel ViewModel { get; set; } = null!;
 }

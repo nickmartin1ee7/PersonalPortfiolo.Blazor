@@ -1,110 +1,137 @@
-﻿@page "/about"
-@using PersonalPortfiolo.Blazor.Models
-@inject IConfiguration _configuration;
-@inject IJSRuntime _jsRuntime;
+@page "/about"
 
-@if (_isLoading)
-{
-    <div class="spinner"></div>
-}
-else
-{
-    <div class="about-section">
-        <div class="flex-center">
-            <div class="container" style="width:100%">
-                <h1>About Me</h1>
-                <hr />
-                <p>Hi, I'm Nick Martin</p>
-                <p>
-                    I am a <bold>.NET Applications Developer</bold> who has a passion for learning new technologies and exploring new ways to solve real-world problems.
-                    I think analytically, have a curious mind that is focused on growth, and work strategically with others on teams.
-                    I feel comfortable in a leadership position and work diligently to grow my team's skill set while achieving our goals.
+<section class="section">
+    <div class="container">
+        <div class="about-grid">
+            <div class="about-intro animate-fade-in-up">
+                <h1 class="section-title">About Me</h1>
+                <p class="lead">
+                    I'm a <strong>.NET Applications Developer</strong> with a passion for learning new technologies 
+                    and exploring innovative solutions to real-world problems.
                 </p>
-                <p>My personality type is <a style="color: cornflowerblue" href="https://www.16personalities.com/istj-personality">ISTJ</a></p>
-                <p>I have worked with IT in various aspects of my life including:</p>
-                <div class="flex-center">
-                        <ul style="text-align: start">
-                            <li>Professionally, during my applications developer position</li>
-                            <li>Professionally, as a Computer Information Systems Tutor for my university</li>
-                            <li>Educationally, through my coursework and projects with non-profits</li>
-                            <li>As a hobbyist, who has created several <a style="color: cornflowerblue" href="projects">side projects</a> to stay current and learn new technologies</li>
-                        </ul>
-                </div>
-                <button class="btn-primary" onclick="@(() => OpenResume())">View Resume</button>
+                <p>
+                    I think analytically, have a curious mind focused on growth, and work strategically with others on teams.
+                    I'm comfortable in leadership positions and strive to grow my team's skill set while achieving our goals.
+                </p>
+                <p>
+                    My personality type is <a href="https://www.16personalities.com/istj-personality" target="_blank">ISTJ</a>
+                </p>
+                <a href="@ViewModel.ResumeUri" target="_blank" class="btn btn-primary mt-lg">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                    View Resume
+                </a>
             </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="column">
-            <div class="card">
-                <img src="/about-student.webp" style="width:100%">
-                <div class="container">
-                    <h2>Student</h2>
-                    <p class="title">University of Louisville</p>
-                    <p>Graduated Cum Laude in December, 2022</p>
-                    <p>
-                        Bachelor of Science in Business Administration in Computer and Information Systems,
-                        with a concentration in Information Security.
-                    </p>
-                    <hr />
-                    <p>Read more about the <a href="https://catalog.louisville.edu/undergraduate/majors/business-administration-cis-bsb">degree requirements</a>
-                    and my <a href="achievements">academic achievements</a>!</p>
+            
+            <div class="about-cards">
+                <div class="role-card animate-fade-in-up stagger-1">
+                    <div class="role-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+                            <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Student</h3>
+                    <p class="card-subtitle">University of Louisville</p>
+                    <p>Graduated Cum Laude, December 2022</p>
+                    <p class="text-sm">Bachelor of Science in Business Administration in Computer and Information Systems, with a concentration in Information Security.</p>
+                    <a href="achievements" class="icon-link">View achievements →</a>
                 </div>
-            </div>
-        </div>
-
-        <div class="column">
-            <div class="card">
-                <img src="/about-ups.webp" style="width:100%">
-                <div class="container">
-                    <h2>.NET Application Developer</h2>
-                    <p class="title">United Parcel Service</p>
-                    <p>I work on an Agile development team at a Fortune 50 industry leader that maintains a mission critical application stack that facilitates regulatory compliance and the job functions for +30,000 CDL UPS drivers.</p>
-                    <p>In this position, I have led several major projects, and worked diligently to maintain and improve complex infrastructure in order to provide value to product owners and stakeholders.</p>
-                    <p>Additionally, I strive to mentor other several team members and interns while guiding them towards success at the company while imparting valuable career skills during their time on our team.</p>
+                
+                <div class="role-card animate-fade-in-up stagger-2">
+                    <div class="role-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                            <path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">.NET Developer</h3>
+                    <p class="card-subtitle">United Parcel Service</p>
+                    <p class="text-sm">Agile development team at a Fortune 50 company maintaining mission-critical applications for 30,000+ CDL drivers. Led major projects and mentored team members and interns.</p>
                 </div>
-            </div>
-        </div>
-
-        <div class="column">
-            <div class="card">
-                <img src="/about-developer.webp" style="width:100%">
-                <div class="container">
-                    <h2>Hobbiest Developer</h2>
-                    <p class="title">Personal</p>
-                    <p>
-                        I love developing side projects! I frequently build new applications to test out ideas or technology.
-                        I maintain multiple cloud projects and home lab environments that require learning concepts about .NET, Docker, Azure, GCP, Linux, and Networking.
-                    </p>
-                    <hr />
-                    <p>
-                        Check out my
-                        <a href="projects">Programming Projects</a>!
-                    </p>
+                
+                <div class="role-card animate-fade-in-up stagger-3">
+                    <div class="role-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"/>
+                            <polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                    </div>
+                    <h3 class="card-title">Hobbyist Developer</h3>
+                    <p class="card-subtitle">Personal Projects</p>
+                    <p class="text-sm">Building side projects to explore new technologies. Maintaining cloud projects and home lab environments with .NET, Docker, Azure, and Linux.</p>
+                    <a href="projects" class="icon-link">View projects →</a>
                 </div>
             </div>
         </div>
     </div>
-}
+</section>
 
-@code
-{
-    private bool _isLoading = true;
-    private Settings? _settings;
-
-    protected override Task OnInitializedAsync()
-    {
-        _settings = _configuration.GetSection(nameof(Settings)).Get<Settings>();
-
-        if (_settings is null)
-            throw new Exception($"{nameof(Settings)} failed to instantiate");
-
-        _isLoading = false;
-
-        return Task.CompletedTask;
+<style>
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding-top: 2rem;
     }
 
-    private async void OpenResume() =>
-        await _jsRuntime.InvokeVoidAsync("open", _settings!.ResumeUri);
+    @@media (min-width: 768px) {
+        .about-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    .about-intro .lead {
+        font-size: 1.2rem;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .about-intro strong {
+        color: var(--accent-cyan);
+    }
+
+    .about-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .role-card {
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        transition: all var(--transition-normal);
+    }
+
+    .role-card:hover {
+        border-color: var(--border-active);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .role-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        background: rgba(34, 211, 238, 0.1);
+        border-radius: var(--radius-md);
+        color: var(--accent-cyan);
+        margin-bottom: 1rem;
+    }
+
+    .text-sm {
+        font-size: 0.9rem;
+    }
+</style>
+
+@code {
+    [Inject] public AboutViewModel ViewModel { get; set; } = null!;
 }

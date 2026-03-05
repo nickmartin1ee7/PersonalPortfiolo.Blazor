@@ -1,0 +1,220 @@
+@inject ISettingsService SettingsService
+
+<nav class="navbar">
+    <div class="navbar-container">
+        <a href="/" class="navbar-brand">
+            <span class="brand-name">NM</span>
+        </a>
+        
+        <div class="navbar-links">
+            <NavLink href="/" class="nav-link" Match="NavLinkMatch.All">Home</NavLink>
+            <NavLink href="about" class="nav-link">About</NavLink>
+            <NavLink href="achievements" class="nav-link">Achievements</NavLink>
+            <NavLink href="projects" class="nav-link">Projects</NavLink>
+            <NavLink href="contact" class="nav-link">Contact</NavLink>
+            <a href="@SettingsService.GetSettings().ResumeUri" target="_blank" class="nav-link nav-link-resume">
+                <span>Resume</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+                </svg>
+            </a>
+        </div>
+
+        <button class="navbar-toggle" @onclick="ToggleMenu" aria-label="Toggle menu">
+            <span class="@(isMenuOpen ? "hamburger open" : "hamburger")"></span>
+        </button>
+    </div>
+
+    @if (isMenuOpen)
+    {
+        <div class="navbar-mobile">
+            <NavLink href="/" class="nav-link-mobile" Match="NavLinkMatch.All" @onclick="CloseMenu">Home</NavLink>
+            <NavLink href="about" class="nav-link-mobile" @onclick="CloseMenu">About</NavLink>
+            <NavLink href="achievements" class="nav-link-mobile" @onclick="CloseMenu">Achievements</NavLink>
+            <NavLink href="projects" class="nav-link-mobile" @onclick="CloseMenu">Projects</NavLink>
+            <NavLink href="contact" class="nav-link-mobile" @onclick="CloseMenu">Contact</NavLink>
+            <a href="@SettingsService.GetSettings().ResumeUri" target="_blank" class="nav-link-mobile">
+                Resume
+            </a>
+        </div>
+    }
+</nav>
+
+@code {
+    private bool isMenuOpen;
+
+    private void ToggleMenu() => isMenuOpen = !isMenuOpen;
+    private void CloseMenu() => isMenuOpen = false;
+}
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(10, 10, 11, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .navbar-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .navbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--text-primary);
+        text-decoration: none;
+    }
+
+    .brand-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet));
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        letter-spacing: -0.02em;
+    }
+
+    .navbar-links {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+    }
+
+    .nav-link {
+        padding: 0.5rem 1rem;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        border-radius: var(--radius-sm);
+        transition: all var(--transition-fast);
+    }
+
+    .nav-link:hover {
+        color: var(--text-primary);
+        background: var(--bg-surface);
+    }
+
+    .nav-link.active {
+        color: var(--accent-cyan);
+        background: rgba(34, 211, 238, 0.1);
+    }
+
+    .nav-link-resume {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-left: 0.5rem;
+        padding: 0.5rem 0.9rem;
+        background: var(--bg-surface);
+        border: 1px solid var(--border-subtle);
+    }
+
+    .nav-link-resume:hover {
+        border-color: var(--accent-cyan);
+        color: var(--accent-cyan);
+    }
+
+    .navbar-toggle {
+        display: none;
+        width: 32px;
+        height: 32px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .hamburger {
+        display: block;
+        width: 20px;
+        height: 2px;
+        background: var(--text-primary);
+        position: relative;
+        transition: background var(--transition-fast);
+    }
+
+    .hamburger::before,
+    .hamburger::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 2px;
+        background: var(--text-primary);
+        left: 0;
+        transition: all var(--transition-fast);
+    }
+
+    .hamburger::before { top: -6px; }
+    .hamburger::after { top: 6px; }
+
+    .hamburger.open {
+        background: transparent;
+    }
+
+    .hamburger.open::before {
+        top: 0;
+        transform: rotate(45deg);
+    }
+
+    .hamburger.open::after {
+        top: 0;
+        transform: rotate(-45deg);
+    }
+
+    .navbar-mobile {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--bg-surface);
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        animation: fadeIn 0.2s ease;
+    }
+
+    .nav-link-mobile {
+        padding: 0.75rem 1rem;
+        color: var(--text-secondary);
+        font-size: 1rem;
+        border-radius: var(--radius-sm);
+        transition: all var(--transition-fast);
+    }
+
+    .nav-link-mobile:hover,
+    .nav-link-mobile.active {
+        color: var(--text-primary);
+        background: var(--bg-surface-hover);
+    }
+
+    @@media (max-width: 768px) {
+        .navbar-links {
+            display: none;
+        }
+
+        .navbar-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+</style>
