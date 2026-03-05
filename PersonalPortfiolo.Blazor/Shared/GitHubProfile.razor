@@ -86,7 +86,8 @@ else
         {
             _repos = await _httpClient.GetFromJsonAsync<Repo[]>(ProfileApiUri);
             _sortedRepos = _repos
-                .OrderByDescending(r => r.Description?.Contains("#featured", StringComparison.OrdinalIgnoreCase) == true)
+                .Where(r => r.Description?.Contains("#!featured", StringComparison.OrdinalIgnoreCase) == false) // Exclude non-featured repos
+                .OrderByDescending(r => r.Description?.Contains("#featured", StringComparison.OrdinalIgnoreCase) == true) // Prioritize featured
                 .ThenByDescending(r => r.StargazersCount)
                 .ThenByDescending(r => r.UpdatedAt);
         }

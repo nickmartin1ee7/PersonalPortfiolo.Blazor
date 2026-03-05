@@ -11,7 +11,7 @@
         </h1>
         
         <p class="hero-subtitle animate-fade-in-up stagger-2">
-            .NET Applications Developer
+            Senior .NET Full Stack Software Engineer
         </p>
         
         <p class="hero-description animate-fade-in-up stagger-3">
@@ -37,12 +37,13 @@
         <div class="hero-tech animate-fade-in-up stagger-5">
             <span class="tech-label">Tech I work with</span>
             <div class="tech-tags">
-                <span class="badge">C#</span>
-                <span class="badge">.NET</span>
+                <span class="badge">C#/.NET</span>
+                <span class="badge">MAUI</span>
+                <span class="badge">Xamarin</span>
                 <span class="badge">Blazor</span>
-                <span class="badge">SQL</span>
                 <span class="badge">Azure</span>
                 <span class="badge">Docker</span>
+                <span class="badge">Agentic AI</span>
             </div>
         </div>
     </div>
@@ -56,17 +57,25 @@
             </div>
             <pre class="code-content"><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="type">Developer</span>
 {
-    <span class="keyword">public</span> <span class="type">string</span> Name { get; } = <span class="string">"Nicholas Martin"</span>;
-    <span class="keyword">public</span> <span class="type">string</span> Role { get; } = <span class="string">".NET Developer"</span>;
-    <span class="keyword">public</span> <span class="type">string</span>[] Skills { get; } = 
-    {
-        <span class="string">"C#"</span>, <span class="string">"ASP.NET"</span>, <span class="string">"Blazor"</span>,
-        <span class="string">"Azure"</span>, <span class="string">"Docker"</span>
-    };
+    <span class="keyword">private</span> <span class="type">BioBuilder</span> _builder = new();
     
-    <span class="keyword">public</span> <span class="keyword">async</span> <span class="keyword">Task</span> BuildAmazingApps()
+    <span class="keyword">public</span> <span class="keyword">async</span> <span class="keyword">Task&lt;Bio&gt;</span> InitializeAsync()
     {
-        <span class="keyword">await</span> <span class="keyword">this</span>.LearnEverything();
+        return <span class="keyword">await</span> <span class="keyword">_builder</span>
+            .WithName(<span class="type">"Nicholas Martin"</span>)
+            .WithTitle(<span class="type">".NET Developer"</span>)
+            .AddWebSkills(
+                <span class="type">WebTech</span>.AspNetCore,
+                <span class="type">WebTech</span>.Blazor,
+                <span class="type">WebTech</span>.Azure)
+            .AddMobileSkills(
+                <span class="type">MobileTech</span>.MAUI,
+                <span class="type">MobileTech</span>.Xamarin)
+            .AddBackendSkills(
+                <span class="type">BackendTech</span>.Sql,
+                <span class="type">BackendTech</span>.WorkerServices,
+                <span class="type">BackendTech</span>.EntityFramework)
+            .BuildAsync();
     }
 }</code></pre>
         </div>
